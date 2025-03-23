@@ -1,12 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App'
-import { registerSW } from 'virtual:pwa-register';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { registerSW } from "virtual:pwa-register";
 
 const updateSW = registerSW({
   onNeedRefresh() {
-    if (confirm("Nuova versione disponibile. Vuoi aggiornare?")) {
-      updateSW(true);
+    const doUpdate = confirm("🔄 Nuova versione disponibile. Vuoi aggiornare?");
+    if (doUpdate) {
+      updateSW.update(); // ✅
     }
   },
   onOfflineReady() {
@@ -14,8 +15,8 @@ const updateSW = registerSW({
   },
 });
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
-)
+  </React.StrictMode>,
+);
