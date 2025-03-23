@@ -27,6 +27,113 @@ export const fetchHabits = async (user) => {
   }
 };
 
+export const getBalance = async (user) => {
+  try {
+    const token = await getFirebaseToken();
+    if (!token) {
+      console.error("Token non disponibile");
+      return;
+    }
+
+    const response = await fetch(config.apiUrl + "/balance/" + user.uid, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Passa il token nel header
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Errore nel recupero delle abitudini");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Errore:", error);
+  }
+};
+
+export const getHistory = async (user) => {
+  try {
+    const token = await getFirebaseToken();
+    if (!token) {
+      console.error("Token non disponibile");
+      return;
+    }
+
+    const response = await fetch(config.apiUrl + "/history/" + user.uid, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Passa il token nel header
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Errore nel recupero delle abitudini");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Errore:", error);
+  }
+};
+
+export const resetBalance = async (user) => {
+  try {
+    const token = await getFirebaseToken();
+    if (!token) {
+      console.error("Token non disponibile");
+      return;
+    }
+
+    const response = await fetch(config.apiUrl + "/reset-balance/" + user.uid, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // Passa il token nel header
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Errore nel recupero delle abitudini");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Errore:", error);
+  }
+};
+
+export const getHistoryBalance = async (user) => {
+  try {
+    const token = await getFirebaseToken();
+    if (!token) {
+      console.error("Token non disponibile");
+      return;
+    }
+
+    const response = await fetch(
+      config.apiUrl + "/balance-history/" + user.uid,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Passa il token nel header
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Errore nel recupero delle abitudini");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Errore:", error);
+  }
+};
+
 export const addHabits = async (user, name, value) => {
   try {
     const token = await getFirebaseToken();
