@@ -1,7 +1,11 @@
 import { getFirebaseToken } from "../firebase";
 import config from "../config";
 
-export const fetchHabits = async (user) => {
+interface User {
+  uid: string;
+}
+
+export const fetchHabits = async (user: User) => {
   try {
     const token = await getFirebaseToken();
     if (!token) {
@@ -27,7 +31,7 @@ export const fetchHabits = async (user) => {
   }
 };
 
-export const getBalance = async (user) => {
+export const getBalance = async (user: User) => {
   try {
     const token = await getFirebaseToken();
     if (!token) {
@@ -53,7 +57,7 @@ export const getBalance = async (user) => {
   }
 };
 
-export const getHistory = async (user) => {
+export const getHistory = async (user: User) => {
   try {
     const token = await getFirebaseToken();
     if (!token) {
@@ -79,7 +83,7 @@ export const getHistory = async (user) => {
   }
 };
 
-export const resetBalance = async (user) => {
+export const resetBalance = async (user: User) => {
   try {
     const token = await getFirebaseToken();
     if (!token) {
@@ -105,7 +109,7 @@ export const resetBalance = async (user) => {
   }
 };
 
-export const getHistoryBalance = async (user) => {
+export const getHistoryBalance = async (user: User) => {
   try {
     const token = await getFirebaseToken();
     if (!token) {
@@ -134,7 +138,7 @@ export const getHistoryBalance = async (user) => {
   }
 };
 
-export const addHabits = async (user, name, value) => {
+export const addHabits = async (user: User, name: string, value: number) => {
   try {
     const token = await getFirebaseToken();
     if (!token) {
@@ -165,7 +169,11 @@ export const addHabits = async (user, name, value) => {
   }
 };
 
-export const completeHabits = async (user, habitId, value) => {
+export const completeHabits = async (
+  user: User,
+  habitId: string,
+  value: number,
+) => {
   try {
     const token = await getFirebaseToken();
     if (!token) {
