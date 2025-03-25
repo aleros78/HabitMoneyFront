@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   fetchHabits,
   addHabits,
+  deleteHabits,
   completeHabits,
   getBalance,
   getHistory,
@@ -19,6 +20,7 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
   const [name, setName] = useState("");
   const [value, setValue] = useState(1);
   const [successMessage, setSuccessMessage] = useState("");
+  const [deleteMessage, setDeleteMessage] = useState("");
   const [balance, setBalance] = useState<number | null>(null);
   const [showHistory, setShowHistory] = useState(false);
   const [history, setHistory] = useState<any[]>([]);
@@ -80,6 +82,17 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
     await loadHabits();
   };
 
+  const deleteHabit = async (habitId: string) => {
+    await deleteHabits(habitId);
+    setDeleteMessage("Abitudine Eliminata");
+
+    setTimeout(() => {
+      setDeleteMessage("");
+    }, 3000);
+
+    await loadHabits();
+  };
+
   return (
     <div>
       {balance !== null && (
@@ -134,6 +147,7 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
             <button onClick={() => handleComplete(habit.id, habit.value)}>
               Completa
             </button>
+            <button onClick={() => deleteHabit(habit.id)}>Elimina</button>
           </li>
         ))}
       </ul>
@@ -142,6 +156,9 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
         <div style={{ marginTop: "1rem", color: "green" }}>
           {successMessage}
         </div>
+      )}
+      {deleteMessage && (
+        <div style={{ marginTop: "1rem", color: "red" }}>{deleteMessage}</div>
       )}
       {showHistory && (
         <div
@@ -221,7 +238,8 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
                   <ul>
                     {historyBalance.map((item, index) => (
                       <li key={index}>
-                        {item.amount} – {new Date(item.resetAt).toLocaleString()}
+                        {item.amount} –{" "}
+                        {new Date(item.resetAt).toLocaleString()}
                       </li>
                     ))}
                   </ul>

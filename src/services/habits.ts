@@ -203,3 +203,29 @@ export const completeHabits = async (
     console.error("Errore:", error);
   }
 };
+
+export const deleteHabits = async (habitId: string) => {
+  try {
+    const token = await getFirebaseToken();
+    if (!token) {
+      console.error("Token non disponibile");
+      return;
+    }
+
+    const response = await fetch(config.apiUrl + "/habits/" + habitId, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("Errore nell'aggiunta dell'abitudine");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Errore:", error);
+  }
+};
