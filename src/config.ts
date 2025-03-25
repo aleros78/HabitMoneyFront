@@ -3,7 +3,7 @@ const config = {
   description: "Track your good habits and save your money",
   themeColor: "#ffffff",
   backgroundColor: "#ffffff",
-  apiUrl: "https://habitapp-vlr3.onrender.com"
-}
+  apiUrl: "https://habitmoney.ovh/",
+};
 
 export default config;
