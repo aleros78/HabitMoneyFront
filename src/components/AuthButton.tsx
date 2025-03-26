@@ -1,6 +1,7 @@
 import React from "react";
 import { GoogleAuthProvider, signInWithPopup, signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import { FiLogOut } from "react-icons/fi";
 
 interface AuthButtonProps {
   user: any;
@@ -24,10 +25,12 @@ const AuthButton: React.FC<AuthButtonProps> = ({ user }) => {
     }
   };
 
-  return user ? (
-    <button onClick={handleSignOut}>Esci</button>
-  ) : (
+  return !user ? (
     <button onClick={handleSignIn}>Accedi con Google</button>
+  ) : (
+    <button onClick={handleSignOut}>
+      <FiLogOut />
+    </button>
   );
 };
 

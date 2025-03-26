@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   fetchHabits,
   addHabits,
@@ -27,6 +27,10 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
   const [historyBalance, setHistoryBalance] = useState<any[]>([]);
   const [showHistoryBalance, setShowHistoryBalance] = useState(false);
 
+  useEffect(() => {
+    loadHabits();
+  }, []);
+
   const loadBalance = async () => {
     const data = await getBalance(user);
     if (data && typeof data.balance === "number") {
@@ -53,7 +57,7 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
   const loadHabits = async () => {
     const data = await fetchHabits(user);
     setHabits(data);
-    await loadBalance(); // aggiunto
+    await loadBalance();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -68,7 +72,7 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
 
   const handleResetBalance = async () => {
     await resetBalance(user);
-    await loadHabits(); // ricarica anche il bilancio
+    await loadHabits();
   };
 
   const handleComplete = async (habitId: string, value: number) => {
@@ -94,24 +98,21 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
   };
 
   return (
-    <div>
+    <div className="habit-container">
       {balance !== null && (
-        <div style={{ textAlign: "center", marginBottom: "1rem" }}>
-          <span style={{ fontWeight: "bold", marginRight: "1rem" }}>
-            💰 Bilancio: {balance.toFixed(2)}
-          </span>
+        <div className="balance-section">
+          <div className="balance-display">💰 Bilancio: {balance.toFixed(2)}</div>
           <button onClick={handleResetBalance}>🔄 Reset</button>
           <button onClick={loadHistoryBalance}>Balance history</button>
         </div>
       )}
-      <button onClick={loadHabits}>Carica abitudini</button>
       <button onClick={() => setShowForm(!showForm)}>
         {showForm ? "Annulla" : "Aggiungi abitudine"}
       </button>
       <button onClick={loadHistory}>Vedi cronologia</button>
 
       {showForm && (
-        <form onSubmit={handleSubmit} style={{ marginTop: "1rem" }}>
+        <form onSubmit={handleSubmit} className="habit-form">
           <div>
             <label>
               Nome abitudine:
@@ -140,119 +141,35 @@ const HabitList: React.FC<HabitListProps> = ({ user }) => {
         </form>
       )}
 
-      <ul>
+      <ul className="habit-list">
         {habits.map((habit) => (
           <li key={habit.id}>
-            {habit.name} - Valore: {habit.value}{" "}
-            <button onClick={() => handleComplete(habit.id, habit.value)}>
-              Completa
-            </button>
-            <button onClick={() => deleteHabit(habit.id)}>Elimina</button>
+            {habit.name} - Valore: {habit.value}
+            <button onClick={() => handleComplete(habit.id, habit.value)}>✔️</button>
+            <button onClick={() => deleteHabit(habit.id)}>❌</button>
           </li>
         ))}
       </ul>
 
-      {successMessage && (
-        <div style={{ marginTop: "1rem", color: "green" }}>
-          {successMessage}
-        </div>
-      )}
-      {deleteMessage && (
-        <div style={{ marginTop: "1rem", color: "red" }}>{deleteMessage}</div>
-      )}
+      {successMessage && <div className="message success">{successMessage}</div>}
+      {deleteMessage && <div className="message error">{deleteMessage}</div>}
+
       {showHistory && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              background: "#fff",
-              padding: "2rem",
-              borderRadius: "10px",
-              maxHeight: "80vh",
-              overflowY: "auto",
-              minWidth: "300px",
-            }}
-          >
-            <h2>Cronologia abitudini</h2>
-            <ul>
-              {history.length === 0 ? (
-                <li>Nessuna abitudine completata.</li>
-              ) : (
-                history.map((item, index) => (
-                  <li key={index}>
-                    {item.habitName} – {item.value} –{" "}
-                    {new Date(item.completedAt).toLocaleString()}
-                  </li>
-                ))
-              )}
-            </ul>
-            <button onClick={() => setShowHistory(false)}>Chiudi</button>
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Cronologia Abitudini</h3>
+            <ul>{history.map((item,index)=>(<li key={index}>{item.habitName} - {item.value} - {new Date(item.completedAt).toLocaleString()}</li>))}</ul>
+            <button onClick={()=>setShowHistory(false)}>Chiudi</button>
           </div>
         </div>
       )}
+
       {showHistoryBalance && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              background: "#fff",
-              padding: "2rem",
-              borderRadius: "10px",
-              maxHeight: "80vh",
-              overflowY: "auto",
-              minWidth: "300px",
-            }}
-          >
-            <h2>Cronologia Balance</h2>
-            <ul>
-              {historyBalance.length === 0 ? (
-                <ul>
-                  <li>Nessun Balance reset.</li>
-                </ul>
-              ) : (
-                <>
-                  <ul>
-                    {historyBalance.map((item, index) => (
-                      <li key={index}>
-                        {item.amount} –{" "}
-                        {new Date(item.resetAt).toLocaleString()}
-                      </li>
-                    ))}
-                  </ul>
-                  <div style={{ marginTop: "1rem", fontWeight: "bold" }}>
-                    Totale reset:{" "}
-                    {historyBalance
-                      .reduce((acc, item) => acc + Number(item.amount), 0)
-                      .toFixed(2)}
-                  </div>
-                </>
-              )}
-            </ul>
-            <button onClick={() => setShowHistoryBalance(false)}>Chiudi</button>
+        <div className="modal-overlay">
+          <div className="modal">
+            <h3>Cronologia Balance</h3>
+            <ul>{historyBalance.map((item,index)=>(<li key={index}>{item.amount} - {new Date(item.resetAt).toLocaleString()}</li>))}</ul>
+            <button onClick={()=>setShowHistoryBalance(false)}>Chiudi</button>
           </div>
         </div>
       )}

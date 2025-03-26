@@ -1,19 +1,17 @@
 import React from "react";
+import { FiDownload } from "react-icons/fi";
 
 interface InstallButtonProps {
   installable: boolean;
   onInstall: () => void;
 }
 
-const InstallButton: React.FC<InstallButtonProps> = ({
-  installable,
-  onInstall,
-}) => {
+const InstallButton: React.FC<InstallButtonProps> = ({ installable, onInstall }) => {
   if (!installable) return null;
 
   return (
-    <button style={{ marginTop: "20px" }} onClick={onInstall}>
-      Installa l'App
+    <button onClick={onInstall}>
+      <FiDownload />
     </button>
   );
 };

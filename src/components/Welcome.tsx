@@ -5,7 +5,9 @@ interface WelcomeProps {
 }
 
 const Welcome: React.FC<WelcomeProps> = ({ user }) => (
-  <h2>{user ? `Ciao, ${user.displayName}!` : "Benvenuto!"}</h2>
+  <h2 style={{ textAlign: "center", fontSize: "1.2rem" }}>
+    {user ? `Ciao, ${user.displayName}!` : "Benvenuto!"}
+  </h2>
 );
 
 export default Welcome;
