@@ -11,6 +11,12 @@ declare module "virtual:pwa-register" {
     onRegisterError?: (error: any) => void;
   };
 
+  declare module "react-icons/*" {
+    import { SVGProps } from "react";
+    const content: (props: SVGProps<SVGSVGElement>) => JSX.Element;
+    export default content;
+  }
+
   export function registerSW(options?: RegisterSWOptions): {
     update: () => void;
   };
