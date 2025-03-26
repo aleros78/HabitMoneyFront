@@ -6,12 +6,15 @@ interface InstallButtonProps {
   onInstall: () => void;
 }
 
-const InstallButton: React.FC<InstallButtonProps> = ({ installable, onInstall }) => {
+const InstallButton: React.FC<InstallButtonProps> = ({
+  installable,
+  onInstall,
+}) => {
   if (!installable) return null;
 
   return (
     <button onClick={onInstall}>
-      {<FiDownload /> as JSX.Element}
+      <FiDownload />
     </button>
   );
 };
