@@ -11,7 +11,7 @@ const InstallButton: React.FC<InstallButtonProps> = ({ installable, onInstall })
 
   return (
     <button onClick={onInstall}>
-      <FiDownload />
+      {<FiDownload /> as JSX.Element}
     </button>
   );
 };
