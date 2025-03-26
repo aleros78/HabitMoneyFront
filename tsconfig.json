@@ -15,7 +15,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "esModuleInterop": true,
-    "types": ["vite/client", "node"]
+    "types": ["vite/client", "node"],
+    "skipLibCheck": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
