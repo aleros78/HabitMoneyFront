@@ -28,9 +28,7 @@ const AuthButton: React.FC<AuthButtonProps> = ({ user }) => {
   return !user ? (
     <button onClick={handleSignIn}>Accedi con Google</button>
   ) : (
-    <button onClick={handleSignOut}>
-      <FiLogOut />
-    </button>
+    <button onClick={handleSignOut}>{FiLogOut({})}</button>
   );
 };
 

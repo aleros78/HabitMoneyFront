@@ -12,11 +12,7 @@ const InstallButton: React.FC<InstallButtonProps> = ({
 }) => {
   if (!installable) return null;
 
-  return (
-    <button onClick={onInstall}>
-      <FiDownload />
-    </button>
-  );
+  return <button onClick={onInstall}>{FiDownload({})}</button>;
 };
 
 export default InstallButton;
