@@ -4,6 +4,7 @@ import AuthButton from "./AuthButton";
 import HabitList from "./HabitList";
 import InstallButton from "./InstallButton";
 import { FiLogOut, FiDownload } from "react-icons/fi";
+import AdBanner from "./AdBanner";
 
 interface MainLayoutProps {
   user: any;
@@ -80,7 +81,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
           borderTop: "1px solid #ddd",
         }}
       >
-        Spazio per ADS
+        <AdBanner />
       </div>
     </div>
   );
