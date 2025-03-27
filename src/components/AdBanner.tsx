@@ -1,5 +1,11 @@
 import { useEffect } from "react";
 
+declare global {
+  interface Window {
+    adsbygoogle: unknown[];
+  }
+}
+
 export default function AdBanner() {
   useEffect(() => {
     const interval = setInterval(() => {
@@ -17,7 +23,8 @@ export default function AdBanner() {
   }, []);
 
   return (
-    <ins className="adsbygoogle"
+    <ins
+      className="adsbygoogle"
       style={{ display: "block" }}
       data-ad-client="ca-pub-6826998190046950"
       data-ad-slot="1188020202"
