@@ -1,0 +1,18 @@
+{
+  "files": {
+    "src/firebase.ts": [
+      {
+        "id": "2df170c8-725f-4b68-ad13-8086e411a08c",
+        "line": 16,
+        "version": 41,
+        "index": 605
+      },
+      {
+        "id": "48773e35-b97a-42a0-8b82-04ea680456af",
+        "line": 22,
+        "version": 41,
+        "index": 817
+      }
+    ]
+  }
+}

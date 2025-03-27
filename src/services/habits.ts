@@ -138,6 +138,35 @@ export const getHistoryBalance = async (user: User) => {
   }
 };
 
+export const getHistoryCompletedUserReset = async (user: User, resetId: string) => {
+  try {
+    const token = await getFirebaseToken();
+    if (!token) {
+      console.error("Token non disponibile");
+      return;
+    }
+
+    const response = await fetch(
+      config.apiUrl + "/completed-history/" + user.uid + "/" + resetId,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // Passa il token nel header
+        },
+      },
+    );
+
+    if (!response.ok) {
+      throw new Error("Errore nel recupero delle abitudini");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Errore:", error);
+  }
+};
+
 export const addHabits = async (user: User, name: string, value: number) => {
   try {
     const token = await getFirebaseToken();

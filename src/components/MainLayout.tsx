@@ -37,7 +37,7 @@ const MainLayout: React.FC<MainLayoutProps> = ({
         <div style={{ marginBottom: "20px", textAlign: "center" }}>
           <button onClick={() => setActiveTab("home")}>Home</button>
           <button onClick={() => setActiveTab("habits")} disabled={!user}>
-            Habits
+            Buone Abitudini
           </button>
         </div>
 
